@@ -1,5 +1,5 @@
-import { useState } from "react";
-import axios from "axios";
+// import { useState } from "react";
+// import axios from "axios";
 
 type AuthResult = {
   accessToken: string;
@@ -32,23 +32,23 @@ interface PaymentDTO {
     _link: string;
   };
 }
-interface WindowWithEnv extends Window {
-  __ENV?: {
-    backendURL: string; // REACT_APP_BACKEND_URL environment variable
-    sandbox: "true" | "false"; // REACT_APP_SANDBOX_SDK environment variable - string, not boolean!
-  };
-}
-const _window: WindowWithEnv = window;
-const backendURL = _window.__ENV && _window.__ENV.backendURL;
-const axiosClient = axios.create({
-  baseURL: `${backendURL}`,
-  timeout: 20000,
-  withCredentials: true,
-});
+// interface WindowWithEnv extends Window {
+//   __ENV?: {
+//     backendURL: string; // REACT_APP_BACKEND_URL environment variable
+//     sandbox: "true" | "false"; // REACT_APP_SANDBOX_SDK environment variable - string, not boolean!
+//   };
+// }
+// const _window: WindowWithEnv = window;
+// const backendURL = _window.__ENV && _window.__ENV.backendURL;
+// const axiosClient = axios.create({
+//   baseURL: `${backendURL}`,
+//   timeout: 20000,
+//   withCredentials: true,
+// });
 
 const onIncompletePaymentFound = (payment: PaymentDTO) => {
   console.log("onIncompletePaymentFound", payment);
-  return axiosClient.post("/payments/incomplete", { payment });
+  // return axiosClient.post("/payments/incomplete", { payment });
 };
 
 async function AuthenticateOnPageLoad() {
@@ -58,10 +58,10 @@ async function AuthenticateOnPageLoad() {
       scopes,
       onIncompletePaymentFound
     );
-    return authResult.user
+    return authResult.user;
   } catch (error) {
     console.error("Error en la autenticación automática:", error);
-    return null
+    return null;
   }
 }
-export default  AuthenticateOnPageLoad
+export default AuthenticateOnPageLoad;
