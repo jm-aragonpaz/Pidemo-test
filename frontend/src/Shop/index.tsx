@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ProductCard from "./components/ProductCard";
 import Header from "./components/Header";
-import AuthenticateOnPageLoad from './utils/LogIn';
+import AuthenticateOnPageLoad from "./utils/LogIn";
 import Mementor from "./components/Mementor";
 
 type MyPaymentMetadata = {};
@@ -47,20 +47,20 @@ interface WindowWithEnv extends Window {
   };
 }
 
-const _window: WindowWithEnv = window;
-const backendURL = _window.__ENV && _window.__ENV.backendURL;
+// const _window: WindowWithEnv = window;
+// const backendURL = _window.__ENV && _window.__ENV.backendURL;
 
-const axiosClient = axios.create({
-  baseURL: `${backendURL}`,
-  timeout: 20000,
-  withCredentials: true,
-});
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-  },
-};
+// const axiosClient = axios.create({
+//   baseURL: `${backendURL}`,
+//   timeout: 20000,
+//   withCredentials: true,
+// });
+// const config = {
+//   headers: {
+//     "Content-Type": "application/json",
+//     "Access-Control-Allow-Origin": "*",
+//   },
+// };
 
 export default function Shop() {
   const [user, setUser] = useState<User | null>(null);
@@ -78,51 +78,49 @@ export default function Shop() {
     fetchData();
   }, []);
 
+  // const orderProduct = async (
+  //   memo: string,
+  //   amount: number,
+  //   paymentMetadata: MyPaymentMetadata
+  // ) => {
+  //   const paymentData = { amount, memo, metadata: paymentMetadata };
+  //   const callbacks = {
+  //     onReadyForServerApproval,
+  //     onReadyForServerCompletion,
+  //     onCancel,
+  //     onError,
+  //   };
+  //   const payment = await window.Pi.createPayment(paymentData, callbacks);
+  //   console.log(payment);
+  // };
 
-  const orderProduct = async (
-    memo: string,
-    amount: number,
-    paymentMetadata: MyPaymentMetadata
-  ) => {
-    const paymentData = { amount, memo, metadata: paymentMetadata };
-    const callbacks = {
-      onReadyForServerApproval,
-      onReadyForServerCompletion,
-      onCancel,
-      onError,
-    };
-    const payment = await window.Pi.createPayment(paymentData, callbacks);
-    console.log(payment);
-  };
+  // const onReadyForServerApproval = (paymentId: string) => {
+  //   console.log("onReadyForServerApproval", paymentId);
+  //   axiosClient.post("/payments/approve", { paymentId }, config);
+  // };
 
-  const onReadyForServerApproval = (paymentId: string) => {
-    console.log("onReadyForServerApproval", paymentId);
-    axiosClient.post("/payments/approve", { paymentId }, config);
-  };
+  // const onReadyForServerCompletion = (paymentId: string, txid: string) => {
+  //   console.log("onReadyForServerCompletion", paymentId, txid);
+  //   axiosClient.post("/payments/complete", { paymentId, txid }, config);
+  // };
 
-  const onReadyForServerCompletion = (paymentId: string, txid: string) => {
-    console.log("onReadyForServerCompletion", paymentId, txid);
-    axiosClient.post("/payments/complete", { paymentId, txid }, config);
-  };
+  // const onCancel = (paymentId: string) => {
+  //   console.log("onCancel", paymentId);
+  //   return axiosClient.post("/payments/cancelled_payment", { paymentId });
+  // };
 
-  const onCancel = (paymentId: string) => {
-    console.log("onCancel", paymentId);
-    return axiosClient.post("/payments/cancelled_payment", { paymentId });
-  };
+  // const onError = (error: Error, payment?: PaymentDTO) => {
+  //   console.log("onError", error);
+  //   if (payment) {
+  //     console.log(payment);
+  //     // handle the error accordingly
+  //   }
+  // };
 
-  const onError = (error: Error, payment?: PaymentDTO) => {
-    console.log("onError", error);
-    if (payment) {
-      console.log(payment);
-      // handle the error accordingly
-    }
-  };
-  
   return (
     <>
       <Header user={user} />
       <Mementor />
-
     </>
   );
 }
