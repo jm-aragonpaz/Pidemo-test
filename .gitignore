@@ -1,4 +1,4 @@
-.env
+.env.development
 docker-data
 .DS_Store
 node_modules
